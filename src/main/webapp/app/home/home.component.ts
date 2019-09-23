@@ -16,6 +16,10 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
     classeNameNeedToReg: string;
+    course_name = '';
+    course_location = '';
+    course_content = '';
+    course_teacher = 0;
 
     constructor(
         private principal: Principal,
@@ -47,6 +51,14 @@ export class HomeComponent implements OnInit {
         return this.principal.isAuthenticated();
     }
 
+    isTeacher() {
+        return this.principal.isTeacher();
+    }
+
+    isStduent() {
+        return this.principal.isStduent();
+    }
+
     login() {
         this.modalRef = this.loginModalService.open();
     }
@@ -72,16 +84,26 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    // registerCourse(courseName) {
-    //
-    // }
-
     clearAllCourses() {
         this.courses = [];
+    }
+
+    clearAllCoursesWithTN() {
+        this.coursesWithTN = [];
     }
 
     addCourseToStudent() {
         const courseName = 'temp';
         this.courseService.addCourseToStudent(courseName, currentUserCredential);
     }
+
+    createCourse() {
+        this.courseService.addCourse(this.course_name, this.course_location, this.course_content, this.course_teacher);
+    }
+
+    deleteCourse(courseName) {
+        this.courseService.delete(courseName);
+    }
+
+    registerCourse(courseName) {}
 }

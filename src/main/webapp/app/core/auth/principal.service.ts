@@ -90,12 +90,12 @@ export class Principal {
 
     // Please realize this method
     isTeacher(): boolean {
-        return false;
+        return this.hasAnyAuthorityDirect(['ROLE_ADMIN']);
     }
 
     // Please realize this method
     isStduent(): boolean {
-        return false;
+        return !this.isTeacher() && this.hasAnyAuthorityDirect(['ROLE_USER']);
     }
 
     isIdentityResolved(): boolean {

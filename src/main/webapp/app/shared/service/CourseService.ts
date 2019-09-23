@@ -11,6 +11,7 @@ export class CourseService {
     private courseAddressWithTNUrl = SERVER_API_URL + '/api/course/findAllCoursesWithTNDto';
     private courseDeleteUrl = SERVER_API_URL + '/api/course/deleteCourse';
     private courseUpdateUrl = SERVER_API_URL + '/api/course/updateCourse';
+    private addCourseUrl = SERVER_API_URL + '/api/course/addCourse';
     private addCourseToStudentUrl = SERVER_API_URL + '/api/course/addCourseToStudent';
 
     constructor(private http: HttpClient) {}
@@ -34,5 +35,9 @@ export class CourseService {
 
     addCourseToStudent(courseName: String, currentUserCredential: String) {
         return this.http.post(SERVER_API_URL + '/api/course/addCourseToStudent', { courseName, currentUserCredential });
+    }
+
+    addCourse(course_name: String, course_location: String, course_content: String, course_teacher: Number) {
+        return this.http.post(addCourseUrl, { courseName, course_location, course_content, course_teacher });
     }
 }
