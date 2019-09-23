@@ -17,7 +17,6 @@ export class CourseService {
     constructor(private http: HttpClient) {}
 
     getCourseInfo(): Observable<CourseDto[]> {
-        debugger;
         return this.http.get<CourseDto[]>(`${this.courseAddressUrl}`);
     }
 
@@ -33,11 +32,12 @@ export class CourseService {
         return this.http.put<Response>(this.courseUpdateUrl, course);
     }
 
-    addCourseToStudent(courseName: String, currentUserCredential: String) {
-        return this.http.post(SERVER_API_URL + '/api/course/addCourseToStudent', { courseName, currentUserCredential });
+    addCourse(course: CourseDto) {
+        console.log(SERVER_API_URL + '/api/course/addCourse');
+        return this.http.post(SERVER_API_URL + '/api/course/addCourse', course);
     }
 
-    addCourse(course_name: String, course_location: String, course_content: String, course_teacher: Number) {
-        return this.http.post(addCourseUrl, { courseName, course_location, course_content, course_teacher });
+    addCourseToStudent(courseName: String, currentUserCredential: String) {
+        return this.http.post(SERVER_API_URL + '/api/course/addCourseToStudent', { courseName, currentUserCredential });
     }
 }

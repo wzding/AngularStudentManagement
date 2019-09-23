@@ -17,29 +17,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping
-@Api(value="Course Service Controller", description = "Controller for find couses information")
+@Api(value="Course Service Controller", description = "Controller for find courses information")
 public class CourseController {
     @Autowired
     private CourseService courseService;
 
     @GetMapping(path = "/api/course/findAllCourses", produces = "application/json")
     public HttpEntity<List<CourseDto>> findAllCourses(){
-
         List<CourseDto> allCourses = courseService.findAllCourses();
-
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
-
-
-    // TODO
-    @GetMapping(path = "/api/course/findAllCoursesLengthLargerThan10", produces = "application/json")
-    public HttpEntity<List<CourseDto>> findAllCoursesLengthLargerThan10(){
-
-        List<CourseDto> filteredCourses = courseService.findAllCoursesLengthLargerThan10();
-
-        return new ResponseEntity<>(filteredCourses, HttpStatus.OK);
-    }
-
 
     @GetMapping(path = "/api/course/findAllCoursesDto", produces = "application/json")
     public HttpEntity<List<CourseDto>> findAllCoursesDto(){
@@ -68,6 +55,7 @@ public class CourseController {
     @PostMapping(path = "/api/course/addCourse", produces = "application/json")
     public HttpStatus addCourse(@RequestBody @NotNull CourseDto course) {
         try {
+            System.out.println(course);
             courseService.addCourse(course);
             return HttpStatus.OK;
         } catch (Exception e) {
@@ -79,16 +67,6 @@ public class CourseController {
     public HttpStatus updateCourse(@RequestBody @NotNull CourseDto course) {
         try {
             courseService.updateCourse(course);
-            return HttpStatus.OK;
-        } catch (Exception e) {
-            return HttpStatus.BAD_REQUEST;
-        }
-    }
-
-    @PostMapping(path = "/api/course/createCourse", produces = "application/json")
-    public HttpStatus createCourse(@RequestBody @NotNull CourseDto course) {
-        try {
-            courseService.addCourse(course);
             return HttpStatus.OK;
         } catch (Exception e) {
             return HttpStatus.BAD_REQUEST;

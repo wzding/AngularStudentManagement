@@ -48,20 +48,6 @@ public class CourseService {
         return courseDtos;
     }
 
-    // TODO
-    public List<CourseDto> findAllCoursesLengthLargerThan10() {
-        List<CourseDto> courseRes = new ArrayList<>();
-
-        //Do No Cache
-        List<Course> courses = courseRepository.findAll();
-        for (Course c : courses) {
-            String name = c.getCourseName();
-            if (name.length() >10)
-                courseRes.add(new CourseDto(name, c.getCourseLocation(), c.getCourseContent(), c.getTeacherId()));
-        }
-        return courseRes;
-    }
-
     public List<CourseDto> findAllCoursesDtoFromDB(){
         return courseRepository.findAllCoursesDto();
     }
@@ -86,11 +72,11 @@ public class CourseService {
     }
 
     public void addCourse(CourseDto course) throws Exception{
-        Optional<Course> courseDto = courseRepository.findCourseByCourseName(course.getCourseName());
-
-        if(courseDto.isPresent()){
-            throw new Exception("Course is existing.");
-        }
+//        Optional<Course> courseDto = courseRepository.findCourseByCourseName(course.getCourseName());
+//
+//        if(courseDto.isPresent()){
+//            throw new Exception("Course is existing.");
+//        }
 
         Course courseBeingSaved = Course.builder()
             .courseName(course.getCourseName())
@@ -98,13 +84,12 @@ public class CourseService {
             .courseLocation(course.getCourseContent())
             .teacherId(course.getTeacherId())
             .build();
-
+        System.out.println(courseBeingSaved);
         try {
             courseRepository.saveAndFlush(courseBeingSaved);
         } catch (Exception e){
             throw new Exception(e.getMessage());
         }
-
     }
 
     public void deleteCourse(String courseName) throws Exception{
