@@ -13,10 +13,10 @@ import { CourseWithTNDto } from 'app/shared/model/courseWithTN-dto.model';
     styleUrls: ['home.css']
 })
 export class HomeComponent implements OnInit {
-    courseToAdd: CourseDto = new CourseDto();
     account: Account;
     modalRef: NgbModalRef;
     classeNameNeedToReg: string;
+    courseToAdd: CourseDto = { courseName: '', courseLocation: '', courseContent: '', courseTeacher: 0 };
 
     constructor(
         private principal: Principal,
@@ -94,7 +94,6 @@ export class HomeComponent implements OnInit {
 
     createCourse() {
         this.courseService.addCourse(this.courseToAdd).subscribe();
-        this.courseToAdd = new CourseDto();
     }
 
     deleteCourse(courseName) {
