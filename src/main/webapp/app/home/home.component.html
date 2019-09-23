@@ -21,16 +21,16 @@
         <hr>
         <div *ngIf="isTeacher()">
             <div>
-                <span>课程名称</span><input type="text" [(ngModel)]="course_name">
+                <span>课程名称</span><input type="text" [(ngModel)]="courseToAdd.courseName">
             </div>
             <div>
-                <span>课程地点</span><input type="text" [(ngModel)]="course_location">
+                <span>课程地点</span><input type="text" [(ngModel)]="courseToAdd.courseLocation">
             </div>
             <div>
-                <span>课程内容</span><input type="text" [(ngModel)]="course_content">
+                <span>课程内容</span><input type="text" [(ngModel)]="courseToAdd.courseContent">
             </div>
             <div>
-                <span>课程老师</span><input type="text" [(ngModel)]="course_teacher">
+                <span>课程老师</span><input type="text" [(ngModel)]="courseToAdd.courseTeacher">
             </div>
             <button (click)="createCourse()"> 创建课程 </button>
         </div>

@@ -13,6 +13,7 @@ import { CourseWithTNDto } from 'app/shared/model/courseWithTN-dto.model';
     styleUrls: ['home.css']
 })
 export class HomeComponent implements OnInit {
+    courseToAdd: CourseDto = new CourseDto();
     account: Account;
     modalRef: NgbModalRef;
     classeNameNeedToReg: string;
@@ -24,10 +25,6 @@ export class HomeComponent implements OnInit {
         private courseService: CourseService
     ) {}
 
-    course_name = '';
-    course_location = '';
-    course_content = '';
-    course_teacher = 0;
     courses: CourseDto[] = [];
     coursesWithTN: CourseWithTNDto[] = [];
 
@@ -96,14 +93,8 @@ export class HomeComponent implements OnInit {
     }
 
     createCourse() {
-        const course: CourseDto = { courseName: '', courseLocation: '', courseContent: '', courseTeacher: 0 };
-        course.courseName = this.course_name;
-        course.courseLocation = this.course_location;
-        course.courseContent = this.course_content;
-        course.courseTeacher = this.course_teacher;
-        //         console.log(course);
-        this.courseService.addCourse(course);
-        console.log('add course');
+        this.courseService.addCourse(this.courseToAdd).subscribe();
+        this.courseToAdd = new CourseDto();
     }
 
     deleteCourse(courseName) {
