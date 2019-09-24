@@ -3,23 +3,24 @@
         <h1 class="display-8">欢迎来到九章全栈课程</h1>
 
         <div *ngIf="isTeacher()">
+            <div>HELLO TEACHER!</div>
             <hr>
-            <span>课程查询/注册功能</span>
+            <span>课程查询/删除功能</span>
             <hr>
-        <div><span><button (click)="getAllCourses()">显示所有课程</button> <button (click)="clearAllCourses()">清除</button></span></div>
-            <div *ngFor="let course of courses" style="padding-bottom: 2px">
+            <div><span><button (click)="getAllCourses()">显示所有课程</button> <button (click)="clearAllCourses()">清除</button></span></div>
+            <div *ngFor="let course of courses; trackBy:indexTracker" style="padding-bottom: 2px">
                 <div style="display: flex; width: 100%; height: 40px; justify-content: space-between; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">
-                    <div style="padding-left: 5px">{{course.courseName}}</div>
+                    <div style="padding-left: 5px" >{{course.courseName}}</div>
                     <div>{{course.courseLocation}}</div>
                     <div>{{course.courseContent}}</div>
                     <div>{{course.teacherId}}</div>
-                    <button (click)="deleteCourse()">删除课程</button>
+                    <button (click)="deleteCourse(course.courseName)">删除课程</button>
                  </div>
             </div>
-        </div>
-
-        <hr>
-        <div *ngIf="isTeacher()">
+            <div *ngIf="isDelete">成功删除课程!</div>
+            <hr>
+            <span>创建新课程</span>
+            <hr>
             <div>
                 <span>课程名称</span><input type="text" [(ngModel)]="courseToAdd.courseName">
             </div>
@@ -33,10 +34,13 @@
                 <span>课程老师</span><input type="text" [(ngModel)]="courseToAdd.courseTeacher">
             </div>
             <button (click)="createCourse()"> 创建课程 </button>
+            <div *ngIf="isCreate">成功创建课程!</div>
+
         </div>
 
 
         <div *ngIf="isStduent()">
+            <div>HELLO STUDENT!</div>
             <hr>
             <span>课程查询/注册功能</span>
             <hr>
@@ -47,14 +51,12 @@
                     <div>{{course.courseLocation}}</div>
                     <div>{{course.courseContent}}</div>
                     <div>{{course.teacherId}}</div>
-                    <input value="" type="button" onClick="addCourseToStudent('')">注册课程</input>
+                    <button (click)="addCourseToStudent(course.courseName)">注册课程</button>
                 </div>
+                <div *ngIf="isRegister">成功注册课程!</div>
             </div>
-        </div>
-
-        <div *ngIf="isStduent()">
             <hr>
-            <span>课程查询/已注册课程</span>
+            <span>已注册课程查询</span>
             <hr>
             <div><span><button (click)="getAllCoursesWithTN()">显示所有课程</button> <button (click)="clearAllCoursesWithTN()">清除</button></span></div>
             <div *ngFor="let course of coursesWithTN" style="padding-bottom: 2px">
@@ -63,8 +65,9 @@
                     <div>{{course.courseLocation}}</div>
                     <div>{{course.courseContent}}</div>
                     <div>{{course.teacherName}}</div>
-                    <button>删除课程</button>
+                    <button>注销课程</button>
                 </div>
+                <div *ngIf="isCancel">成功注销课程!</div>
             </div>
         </div>
 
