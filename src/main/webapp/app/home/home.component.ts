@@ -16,7 +16,11 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
     classeNameNeedToReg: string;
-    courseToAdd: CourseDto = { courseName: '', courseLocation: '', courseContent: '', courseTeacher: 0 };
+    isDelete = false;
+    isCreate = false;
+    isRegister = false;
+    isCancel = false;
+    courseToAdd: CourseDto = { courseName: '', courseLocation: '', courseContent: '', courseTeacher: '' };
 
     constructor(
         private principal: Principal,
@@ -60,6 +64,7 @@ export class HomeComponent implements OnInit {
     }
 
     getAllCourses() {
+        this.isDelete = false;
         this.courseService.getCourseInfo().subscribe(curDto => {
             if (!curDto) {
                 this.courses = [];
@@ -80,6 +85,7 @@ export class HomeComponent implements OnInit {
     }
 
     clearAllCourses() {
+        this.isDelete = false;
         this.courses = [];
     }
 
@@ -87,18 +93,21 @@ export class HomeComponent implements OnInit {
         this.coursesWithTN = [];
     }
 
-    addCourseToStudent() {
-        const courseName = 'temp';
+    addCourseToStudent(courseName, currentUserCredential) {
         this.courseService.addCourseToStudent(courseName, currentUserCredential);
     }
 
     createCourse() {
         this.courseService.addCourse(this.courseToAdd).subscribe();
+        this.isCreate = true;
+        this.courseToAdd.courseName = '';
+        this.courseToAdd.courseLocation = '';
+        this.courseToAdd.courseContent = '';
+        this.courseToAdd.courseTeacher = '';
     }
 
     deleteCourse(courseName) {
-        this.courseService.delete(courseName);
+        this.courseService.delete(courseName).subscribe();
+        this.isDelete = true;
     }
-
-    registerCourse(courseName) {}
 }
