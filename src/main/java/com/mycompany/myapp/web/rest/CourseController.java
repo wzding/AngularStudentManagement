@@ -1,6 +1,7 @@
 package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Course;
+import com.mycompany.myapp.domain.UserCourse;
 import com.mycompany.myapp.domain.dto.CourseDto;
 import com.mycompany.myapp.domain.dto.CourseWithTNDto;
 import com.mycompany.myapp.service.CourseService;
@@ -63,6 +64,16 @@ public class CourseController {
         }
     }
 
+//    @PostMapping(path = "/api/course/addCourseToStudent/{courseName}", produces = "application/js")
+//    public HttpStatus addCourseToStudent(@NotNull @PathVariable("courseName") UserCourse usercourse) {
+//        try {
+//            courseService.addCourseToStudent(usercourse);
+//            return HttpStatus.OK;
+//        } catch (Exception e) {
+//            return HttpStatus.BAD_REQUEST;
+//        }
+//    }
+
     @PutMapping(path = "/api/course/updateCourse", produces = "application/json")
     public HttpStatus updateCourse(@RequestBody @NotNull CourseDto course) {
         try {
@@ -83,13 +94,5 @@ public class CourseController {
         }
     }
 
-//    @PostMapping(path = "/api/course/addCourseToStudent/{courseName}", produces = "application/js")
-//    public HttpStatus addCourseToStudent(@NotNull @PathVariable("courseName") UserCourse userCourse) {
-//        try {
-//            courseService.addCourseToStudent(userCourse);
-//            return HttpStatus.OK;
-//        } catch (Exception e) {
-//            return HttpStatus.BAD_REQUEST;
-//        }
-//    }
+
 }
