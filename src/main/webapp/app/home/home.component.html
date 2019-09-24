@@ -51,10 +51,10 @@
                     <div>{{course.courseLocation}}</div>
                     <div>{{course.courseContent}}</div>
                     <div>{{course.teacherId}}</div>
-                    <button (click)="addCourseToStudent(course.courseName)">注册课程</button>
+                    <button (click)="registerCourse(course.courseName)">注册课程</button>
                 </div>
-                <div *ngIf="isRegister">成功注册课程!</div>
             </div>
+            <div *ngIf="isRegister">成功注册课程!</div>
             <hr>
             <span>已注册课程查询</span>
             <hr>
@@ -65,7 +65,7 @@
                     <div>{{course.courseLocation}}</div>
                     <div>{{course.courseContent}}</div>
                     <div>{{course.teacherName}}</div>
-                    <button>注销课程</button>
+                    <button (click)="cancelCourse(course.courseName)">注销课程</button>
                 </div>
                 <div *ngIf="isCancel">成功注销课程!</div>
             </div>

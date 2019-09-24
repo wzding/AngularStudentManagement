@@ -1,11 +1,13 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.Course;
+import com.mycompany.myapp.domain.StdCourse;
 import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.domain.UserCourse;
 import com.mycompany.myapp.domain.dto.CourseDto;
 import com.mycompany.myapp.domain.dto.CourseWithTNDto;
 import com.mycompany.myapp.repository.CourseRepository;
+import com.mycompany.myapp.repository.StdCourseRepository;
 import com.mycompany.myapp.repository.UserCourseRepository;
 import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.C;
@@ -25,7 +27,7 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     @Autowired
-    private UserCourseRepository userCourseRepository;
+    private StdCourseRepository stdCourseRepository;
 
     @Autowired
     private UserService userService;
@@ -53,22 +55,27 @@ public class CourseService {
     }
 
     public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB(){
-        return courseRepository.findAllCoursesDtoWithTeacherName();
+        return stdCourseRepository.findAllCoursesDtoWithTeacherName();
     }
 
 
     public void registerCourse(String courseName) throws Exception{
-        Optional<User> curUser = userService.getUserWithAuthorities();
-        Optional<Course> curCourse = courseRepository.findCourseByCourseName(courseName);
+        Optional<Course> OptionalExistingCourse = courseRepository.findCourseByCourseName(courseName);
+        Course course = OptionalExistingCourse.get();
 
-        if (curUser.isPresent() && curCourse.isPresent()){
-            userCourseRepository.save(UserCourse.builder()
-                .user(curUser.get())
-                .course(curCourse.get())
-                .build());
-        } else {
-            throw new Exception("UnExpected Exception");
+        Course courseBeingSaved = Course.builder()
+            .courseName(course.getCourseName())
+            .courseContent(course.getCourseContent())
+            .courseLocation(course.getCourseContent())
+            .teacherId(course.getTeacherId())
+            .build();
+
+        try {
+            stdCourseRepository.saveAndFlush(courseBeingSaved);
+        } catch (Exception e){
+            throw new Exception(e.getMessage());
         }
+
     }
 
     public void addCourse(CourseDto course) throws Exception{
@@ -86,19 +93,6 @@ public class CourseService {
         }
     }
 
-//    public void addCourseToStudent(UserCourse usercourse) throws Exception {
-//        UserCourse courseBeingSaved = usercourse.builder()
-//            .course(usercourse.getCourse())
-//            .user(usercourse.getUser())
-//            .build();
-//        System.out.println(courseBeingSaved);
-//        try {
-//            userCourseRepository.saveAndFlush(courseBeingSaved);
-//        } catch (Exception e){
-//            throw new Exception(e.getMessage());
-//        }
-//    }
-
     public void deleteCourse(String courseName) throws Exception{
         Optional<Course> OptionalExistingCourse = courseRepository.findCourseByCourseName(courseName);
 
@@ -109,6 +103,15 @@ public class CourseService {
         }
     }
 
+    public void cancelCourse(String courseName) throws Exception{
+        Optional<Course> OptionalExistingCourse = stdCourseRepository.findCourseByCourseName(courseName);
+
+        try {
+            stdCourseRepository.delete(OptionalExistingCourse.get());
+        } catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
 
     public void updateCourse(CourseDto course) throws Exception{
         Optional<Course> OptionalExistingCourse = courseRepository.findCourseByCourseName(course.getCourseName());

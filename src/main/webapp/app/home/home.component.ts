@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit {
 
     getAllCourses() {
         this.isDelete = false;
+        this.isRegister = false;
         this.courseService.getCourseInfo().subscribe(curDto => {
             if (!curDto) {
                 this.courses = [];
@@ -86,15 +87,12 @@ export class HomeComponent implements OnInit {
 
     clearAllCourses() {
         this.isDelete = false;
+        this.isRegister = false;
         this.courses = [];
     }
 
     clearAllCoursesWithTN() {
         this.coursesWithTN = [];
-    }
-
-    addCourseToStudent(courseName, currentUserCredential) {
-        this.courseService.addCourseToStudent(courseName, currentUserCredential);
     }
 
     createCourse() {
@@ -106,8 +104,18 @@ export class HomeComponent implements OnInit {
         this.courseToAdd.courseTeacher = '';
     }
 
+    registerCourse(courseName) {
+        this.courseService.registerCourse(courseName).subscribe();
+        this.isRegister = true;
+    }
+
     deleteCourse(courseName) {
         this.courseService.delete(courseName).subscribe();
         this.isDelete = true;
+    }
+
+    cancelCourse(courseName) {
+        this.courseService.cancelCourse(courseName).subscribe();
+        this.isCancel = true;
     }
 }

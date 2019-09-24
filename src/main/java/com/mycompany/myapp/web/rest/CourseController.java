@@ -64,16 +64,6 @@ public class CourseController {
         }
     }
 
-//    @PostMapping(path = "/api/course/addCourseToStudent/{courseName}", produces = "application/js")
-//    public HttpStatus addCourseToStudent(@NotNull @PathVariable("courseName") UserCourse usercourse) {
-//        try {
-//            courseService.addCourseToStudent(usercourse);
-//            return HttpStatus.OK;
-//        } catch (Exception e) {
-//            return HttpStatus.BAD_REQUEST;
-//        }
-//    }
-
     @PutMapping(path = "/api/course/updateCourse", produces = "application/json")
     public HttpStatus updateCourse(@RequestBody @NotNull CourseDto course) {
         try {
@@ -86,6 +76,16 @@ public class CourseController {
 
     @DeleteMapping(path = "/api/course/deleteCourse/{courseName}", produces = "application/js")
     public HttpStatus deleteCourse(@NotNull @PathVariable("courseName") String courseName) {
+        try {
+            courseService.deleteCourse(courseName);
+            return HttpStatus.OK;
+        } catch (Exception e) {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+
+    @DeleteMapping(path = "/api/course/cancelCourse/{courseName}", produces = "application/json")
+    public HttpStatus cancelCourse(@NotNull @PathVariable("courseName") String courseName) {
         try {
             courseService.deleteCourse(courseName);
             return HttpStatus.OK;
