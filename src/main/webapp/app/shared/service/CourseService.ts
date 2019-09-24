@@ -37,7 +37,7 @@ export class CourseService {
         return this.http.post(SERVER_API_URL + '/api/course/addCourse', course);
     }
 
-    addCourseToStudent(courseName: String, currentUserCredential: String) {
-        return this.http.post(SERVER_API_URL + '/api/course/addCourseToStudent', { courseName, currentUserCredential });
-    }
+    //     addCourseToStudent(courseName: String, currentUserCredential: String) {
+    //         return this.http.post(SERVER_API_URL + '/api/course/addCourseToStudent', { courseName, currentUserCredential });
+    //     }
 }
