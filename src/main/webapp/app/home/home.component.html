@@ -3,7 +3,7 @@
         <h1 class="display-8">欢迎来到九章全栈课程</h1>
 
         <div *ngIf="isTeacher()">
-            <div>HELLO TEACHER!</div>
+            <h2>HELLO TEACHER!</h2>
             <hr>
             <span>课程查询/删除功能</span>
             <hr>
@@ -31,7 +31,7 @@
                 <span>课程内容</span><input type="text" [(ngModel)]="courseToAdd.courseContent">
             </div>
             <div>
-                <span>课程老师</span><input type="text" [(ngModel)]="courseToAdd.courseTeacher">
+                <span>课程老师</span><input type="text" [(ngModel)]="courseToAdd.teacherId">
             </div>
             <button (click)="createCourse()"> 创建课程 </button>
             <div *ngIf="isCreate">成功创建课程!</div>
@@ -40,7 +40,7 @@
 
 
         <div *ngIf="isStduent()">
-            <div>HELLO STUDENT!</div>
+            <h2>HELLO STUDENT!</h2>
             <hr>
             <span>课程查询/注册功能</span>
             <hr>
@@ -67,8 +67,8 @@
                     <div>{{course.teacherName}}</div>
                     <button (click)="cancelCourse(course.courseName)">注销课程</button>
                 </div>
-                <div *ngIf="isCancel">成功注销课程!</div>
             </div>
+            <div *ngIf="isCancel">成功注销课程!</div>
         </div>
 
     </div>

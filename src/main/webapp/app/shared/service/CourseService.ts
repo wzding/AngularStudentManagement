@@ -13,6 +13,8 @@ export class CourseService {
     private courseUpdateUrl = SERVER_API_URL + '/api/course/updateCourse';
     private addCourseUrl = SERVER_API_URL + '/api/course/addCourse';
     private addCourseToStudentUrl = SERVER_API_URL + '/api/course/addCourseToStudent';
+    private courseRegisterUrl = SERVER_API_URL + '/api/course/registerCourse';
+    private courseCancelUrl = SERVER_API_URL + '/api/course/cancelCourse';
 
     constructor(private http: HttpClient) {}
 
@@ -37,7 +39,13 @@ export class CourseService {
         return this.http.post(SERVER_API_URL + '/api/course/addCourse', course);
     }
 
-    //     addCourseToStudent(courseName: String, currentUserCredential: String) {
-    //         return this.http.post(SERVER_API_URL + '/api/course/addCourseToStudent', { courseName, currentUserCredential });
-    //     }
+    register(courseName: String) {
+        console.log('here');
+        console.log(`${this.courseRegisterUrl}/${courseName}`);
+        return this.http.post(`${this.courseRegisterUrl}/${courseName}`);
+    }
+
+    cancel(courseName: String): Observable<Response> {
+        return this.http.delete<Response>(`${this.courseCancelUrl}/${courseName}`);
+    }
 }

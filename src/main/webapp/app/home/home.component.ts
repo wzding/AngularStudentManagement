@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     isCreate = false;
     isRegister = false;
     isCancel = false;
-    courseToAdd: CourseDto = { courseName: '', courseLocation: '', courseContent: '', courseTeacher: '' };
+    courseToAdd: CourseDto = { courseName: '', courseLocation: '', courseContent: '', teacherId: '' };
 
     constructor(
         private principal: Principal,
@@ -76,6 +76,7 @@ export class HomeComponent implements OnInit {
     }
 
     getAllCoursesWithTN() {
+        this.isCancel = false;
         this.courseService.getCourseInfoWithTN().subscribe(curDto => {
             if (!curDto) {
                 this.coursesWithTN = [];
@@ -92,20 +93,23 @@ export class HomeComponent implements OnInit {
     }
 
     clearAllCoursesWithTN() {
+        this.isCancel = false;
         this.coursesWithTN = [];
     }
 
     createCourse() {
+        console.log('teacher');
+        console.log(this.courseToAdd.teacherId);
         this.courseService.addCourse(this.courseToAdd).subscribe();
         this.isCreate = true;
         this.courseToAdd.courseName = '';
         this.courseToAdd.courseLocation = '';
         this.courseToAdd.courseContent = '';
-        this.courseToAdd.courseTeacher = '';
+        this.courseToAdd.teacherId = '';
     }
 
     registerCourse(courseName) {
-        this.courseService.registerCourse(courseName).subscribe();
+        this.courseService.register(courseName).subscribe();
         this.isRegister = true;
     }
 
@@ -115,7 +119,7 @@ export class HomeComponent implements OnInit {
     }
 
     cancelCourse(courseName) {
-        this.courseService.cancelCourse(courseName).subscribe();
+        this.courseService.cancel(courseName).subscribe();
         this.isCancel = true;
     }
 }

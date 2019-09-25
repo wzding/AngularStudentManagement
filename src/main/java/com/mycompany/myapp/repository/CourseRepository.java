@@ -2,7 +2,6 @@ package com.mycompany.myapp.repository;
 
 import com.mycompany.myapp.domain.Course;
 import com.mycompany.myapp.domain.dto.CourseDto;
-import com.mycompany.myapp.domain.dto.CourseWithTNDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
